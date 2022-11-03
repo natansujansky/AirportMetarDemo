@@ -32,13 +32,13 @@ public class SubscriptionController {
 	}
 
 	@GetMapping("/{icaoCode}")
-	public Subscription getOne(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode) {
+	public Subscription getOne(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode) {
 		return subService.fetchSubscription(icaoCode);
 	}
 
 	@PostMapping("")
 	public void post(@Valid @RequestBody Subscription sub) {
-		if (java.util.regex.Pattern.compile("[A-Z]{4}").matcher(sub.getIcaoCode()).matches()) {
+		if (java.util.regex.Pattern.compile("[A-Z0-9]{4}").matcher(sub.getIcaoCode()).matches()) {
 			subService.insertSubscription(sub);
 		} else {
 			throw new IllegalArgumentException("Incorrect payload format!");
@@ -46,7 +46,7 @@ public class SubscriptionController {
 	}
 
 	@DeleteMapping("/{icaoCode}")
-	public ResponseEntity<?> delete(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode) {
+	public ResponseEntity<?> delete(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode) {
 		subService.deleteSubscription(icaoCode);
 		return ResponseEntity.noContent().build();
 	}

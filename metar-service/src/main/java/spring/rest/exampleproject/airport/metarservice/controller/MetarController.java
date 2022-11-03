@@ -33,17 +33,17 @@ public class MetarController {
 	}
 
 	@GetMapping("/{icaoCode}")
-	public List<Metar> getAllWithSameIcaoCode(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode) {
+	public List<Metar> getAllWithSameIcaoCode(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode) {
 		return metarService.fetchAllMetarEntriesForSingleAirport(icaoCode);
 	}
 
 	@GetMapping("/{icaoCode}/METAR")
-	public Metar getLatestAirportMetarData(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode) {
+	public Metar getLatestAirportMetarData(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode) {
 		return metarService.fetchLatestMetarEntry(icaoCode);
 	}
 
 	@PostMapping("/{icaoCode}/METAR")
-	public void post(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode,
+	public void post(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode,
 			@RequestBody String data) {
 		JSONObject jsonData = (JSONObject) JSONValue.parse(data);
 		try {
@@ -59,7 +59,7 @@ public class MetarController {
 	}
 	
 	@DeleteMapping("/{icaoCode}")
-	public ResponseEntity<?> delete(@Pattern(regexp = "[A-Z]{4}") @PathVariable String icaoCode) {
+	public ResponseEntity<?> delete(@Pattern(regexp = "[A-Z0-9]{4}") @PathVariable String icaoCode) {
 		metarService.deleteMetarEntry(icaoCode);
 		return ResponseEntity.noContent().build();
 	}
