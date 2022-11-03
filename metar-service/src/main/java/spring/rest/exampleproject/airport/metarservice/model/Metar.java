@@ -25,7 +25,7 @@ public class Metar {
 	@Column(columnDefinition = "char(4) not null")
 	private String icaoCode;
 	
-	@Column(nullable=false, length=150)
+	@Column(nullable=false, length=250)
 	private String data;
 	
 	@CreationTimestamp
